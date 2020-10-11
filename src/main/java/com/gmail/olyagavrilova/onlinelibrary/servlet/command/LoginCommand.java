@@ -1,8 +1,9 @@
-package com.gmail.olyagavrilova.onlinelibrary.controller;
+package com.gmail.olyagavrilova.onlinelibrary.servlet.command;
 
 import com.gmail.olyagavrilova.onlinelibrary.dao.entity.User;
 import com.gmail.olyagavrilova.onlinelibrary.service.BookService;
 import com.gmail.olyagavrilova.onlinelibrary.service.UserService;
+import com.gmail.olyagavrilova.onlinelibrary.servlet.Command;
 import com.mysql.cj.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

@@ -7,7 +7,7 @@
 
   <servlet>
     <servlet-name>DispatcherServlet</servlet-name>
-    <servlet-class>com.gmail.olyagavrilova.onlinelibrary.controller.DispatcherServlet</servlet-class>
+    <servlet-class>com.gmail.olyagavrilova.onlinelibrary.servlet.DispatcherServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

@@ -1,4 +1,8 @@
-package com.gmail.olyagavrilova.onlinelibrary.controller;
+package com.gmail.olyagavrilova.onlinelibrary.servlet;
+
+import com.gmail.olyagavrilova.onlinelibrary.servlet.command.AdminCommand;
+import com.gmail.olyagavrilova.onlinelibrary.servlet.command.BookCommand;
+import com.gmail.olyagavrilova.onlinelibrary.servlet.command.LoginCommand;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

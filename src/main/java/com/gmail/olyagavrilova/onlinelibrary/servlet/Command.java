@@ -1,4 +1,4 @@
-package com.gmail.olyagavrilova.onlinelibrary.controller;
+package com.gmail.olyagavrilova.onlinelibrary.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 

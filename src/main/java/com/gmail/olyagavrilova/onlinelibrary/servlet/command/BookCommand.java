@@ -1,6 +1,7 @@
-package com.gmail.olyagavrilova.onlinelibrary.controller;
+package com.gmail.olyagavrilova.onlinelibrary.servlet.command;
 
 import com.gmail.olyagavrilova.onlinelibrary.service.BookService;
+import com.gmail.olyagavrilova.onlinelibrary.servlet.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
