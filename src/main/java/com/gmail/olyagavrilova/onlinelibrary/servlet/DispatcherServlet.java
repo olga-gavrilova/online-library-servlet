@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class DispatcherServlet extends HttpServlet {
 
-    private Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands = new HashMap<>();
 
     public void init() {
         commands.put("login", new LoginCommand());
@@ -28,6 +28,17 @@ public class DispatcherServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
 
+        dispatch(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        dispatch(request, response);
+    }
+
+    private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getRequestURI();
         path = path.replaceAll(".*/api/", "");
 
