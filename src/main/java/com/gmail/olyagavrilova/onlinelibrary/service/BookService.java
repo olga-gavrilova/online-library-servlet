@@ -14,9 +14,15 @@ import java.util.stream.Collectors;
 public class BookService {
     private final static Logger logger = Logger.getLogger("BookService");
 
-    private final BookDAO bookDAO = new BookDAO();
-    private final BookMapper bookMapper = new BookMapper();
-    private final SubscriptionDAO subscriptionDao = new SubscriptionDAO();
+    private final BookDAO bookDAO;
+    private final SubscriptionDAO subscriptionDao;
+    private final BookMapper bookMapper;
+
+    public BookService() {
+        this.bookDAO = new BookDAO();
+        this.subscriptionDao = new SubscriptionDAO();
+        this.bookMapper = new BookMapper();
+    }
 
     public void createBook(String bookTitle, String bookAuthor, String bookPublisher, String bookQuantity, String bookYearOfPublishing) {
         Book book = new Book();

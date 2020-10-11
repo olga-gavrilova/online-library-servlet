@@ -14,7 +14,7 @@ public class BookDAO {
 
     public void create(Book book) {
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement insertPreparedStatement = connection.prepareStatement("INSERT INTO book (title, " +
+             PreparedStatement insertPreparedStatement = connection.prepareStatement("INSERT INTO books (title, " +
                      "author,publisher,quantity, year_of_publishing ) " +
                      "VALUES (?,?,?,?,?)");
              Statement statement = connection.createStatement()) {
@@ -41,7 +41,7 @@ public class BookDAO {
 
     public void update(Book book) {
         try (Connection connection = DataSource.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("Update book" +
+             PreparedStatement preparedStatement = connection.prepareStatement("Update books" +
                      " Set title = (?), author = (?), publisher = (?), quantity = (?),  year_of_publishing = (?)" +
                      " where id = (?)")) {
 
@@ -63,7 +63,7 @@ public class BookDAO {
             logger.log(Level.INFO, "There ia no such a Book in DB");
         } else {
             try (Connection connection = DataSource.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement("delete from book where id =  (?)")) {
+                 PreparedStatement preparedStatement = connection.prepareStatement("delete from books where id =  (?)")) {
                 preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
@@ -104,7 +104,7 @@ public class BookDAO {
         Book book = null;
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from book where id = '" + id + "'")) {
+             ResultSet resultSet = statement.executeQuery("select * from books where id = '" + id + "'")) {
 
             resultSet.next();
 
@@ -127,7 +127,7 @@ public class BookDAO {
 
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from book where title = '" + title + "'")) {
+             ResultSet resultSet = statement.executeQuery("select * from books where title = '" + title + "'")) {
 
             resultSet.next();
 
@@ -153,7 +153,7 @@ public class BookDAO {
 
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from book where author = '" + author + "'")) {
+             ResultSet resultSet = statement.executeQuery("select * from books where author = '" + author + "'")) {
 
             resultSet.next();
 
@@ -179,7 +179,7 @@ public class BookDAO {
 
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from book where publisher = '" + publisher + "'")) {
+             ResultSet resultSet = statement.executeQuery("select * from books where publisher = '" + publisher + "'")) {
 
             resultSet.next();
 
@@ -205,7 +205,7 @@ public class BookDAO {
 
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM book")) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM books")) {
 
             while (resultSet.next()) {
                 Book book = new Book(resultSet.getInt("id"),
@@ -228,7 +228,7 @@ public class BookDAO {
 
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from book limit " + (start - 1) + ", " + total)) {
+             ResultSet resultSet = statement.executeQuery("select * from books limit " + (start - 1) + ", " + total)) {
             while (resultSet.next()) {
                 Book book = new Book();
                 book.setId(resultSet.getInt("id"));

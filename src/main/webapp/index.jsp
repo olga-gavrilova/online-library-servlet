@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Login In</title>
@@ -15,7 +16,7 @@
 
     %>
 
-<form action="loginServlet" method="get">
+<form method="GET" action="${pageContext.request.contextPath}/api/login">
 
     <i>Username <input type="text" name="username">
     </i>
