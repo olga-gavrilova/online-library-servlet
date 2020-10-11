@@ -1,10 +1,10 @@
 package com.gmail.olyagavrilova.onlinelibrary.service;
 
 import com.gmail.olyagavrilova.onlinelibrary.dao.UserDAO;
-import com.gmail.olyagavrilova.onlinelibrary.dao.dto.UserDto;
+import com.gmail.olyagavrilova.onlinelibrary.model.UserDto;
 import com.gmail.olyagavrilova.onlinelibrary.exception.UserNotFoundException;
-import com.gmail.olyagavrilova.onlinelibrary.model.Role;
-import com.gmail.olyagavrilova.onlinelibrary.model.User;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Role;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.User;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;

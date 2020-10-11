@@ -1,4 +1,4 @@
-<%@ page import="com.gmail.olyagavrilova.onlinelibrary.model.Book" %>
+<%@ page import="com.gmail.olyagavrilova.onlinelibrary.dao.entity.Book" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

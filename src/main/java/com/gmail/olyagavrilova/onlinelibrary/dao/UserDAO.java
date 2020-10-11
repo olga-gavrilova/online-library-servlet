@@ -1,8 +1,7 @@
 package com.gmail.olyagavrilova.onlinelibrary.dao;
 
-import com.gmail.olyagavrilova.onlinelibrary.dao.dto.UserDto;
-import com.gmail.olyagavrilova.onlinelibrary.model.Role;
-import com.gmail.olyagavrilova.onlinelibrary.model.User;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Role;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,40 +11,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserDAO {
-    private static Logger logger = Logger.getLogger("UserDAO");
+    private final static Logger logger = Logger.getLogger("UserDAO");
 
-    public Optional <User> findByUsername(String username) {
-        User user = null;
-        try (Connection connection = DataSource.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from users where username = " + username )) {
-
-            resultSet.next();
-
-            user = new User(resultSet.getInt("id"),
-                    resultSet.getNString("username"),
-                    resultSet.getNString("password"),
-                    Role.valueOf(resultSet.getNString("role")),
-                    resultSet.getBoolean("enabled"));
-
-
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Exception during getting user from db", e);
-        }
-        return Optional.of(user);
-    }
-
-    public void addUserToBD(UserDto user){
+    public void create(User user) {
         try (Connection connection = DataSource.getConnection();
              PreparedStatement insertPreparedStatement = connection.prepareStatement("INSERT INTO users ( " +
                      "username, password, role, enabled) " +
                      "VALUES (?,?,?,?)");
              Statement statement = connection.createStatement()) {
 
-            insertPreparedStatement.setString(1, user.getUsername());
+            insertPreparedStatement.setString(1, user.getUserName());
             insertPreparedStatement.setString(2, user.getPassword());
             insertPreparedStatement.setString(3, user.getRole().toString());
-            insertPreparedStatement.setBoolean(4,user.isEnabled());
+            insertPreparedStatement.setBoolean(4, user.isEnabled());
 
             insertPreparedStatement.executeUpdate();
 
@@ -54,11 +32,32 @@ public class UserDAO {
         }
     }
 
-    public Optional<User> findById(int id){
+    public Optional<User> checkLogin(String login, String password) {
         User user = null;
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from users where id =" + id )) {
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username = '" + login +
+                     "'" + "AND password = '" + password + "'")) {
+
+            resultSet.next();
+
+            user = new User(resultSet.getInt("id"),
+                    resultSet.getNString("username"),
+                    resultSet.getNString("password"),
+                    Role.valueOf(resultSet.getNString("role")),
+                    resultSet.getBoolean("enabled"));
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Exception during getting user from db", e);
+        }
+        return Optional.ofNullable(user);
+    }
+
+    public Optional<User> findByUsername(String username) {
+        User user = null;
+        try (Connection connection = DataSource.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from users where username = '" + username + "'")) {
 
             resultSet.next();
 
@@ -72,15 +71,14 @@ public class UserDAO {
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Exception during getting user from db", e);
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
-    public User checkLogin(String login, String password ){
+    public Optional<User> findById(int id) {
         User user = null;
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE username = '" + login+
-                     "'"+ "AND password = '"+password+"'"))  {
+             ResultSet resultSet = statement.executeQuery("select * from users where id = '" + id + "'")) {
 
             resultSet.next();
 
@@ -90,13 +88,14 @@ public class UserDAO {
                     Role.valueOf(resultSet.getNString("role")),
                     resultSet.getBoolean("enabled"));
 
+
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Exception during getting user from db", e);
         }
-        return user;
+        return Optional.ofNullable(user);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         List<User> listOfUsers = new ArrayList<>();
 
         try (Connection connection = DataSource.getConnection();
@@ -118,11 +117,11 @@ public class UserDAO {
         return listOfUsers;
     }
 
-    public void updateUsersEnable(int userId, boolean enabled){
+    public void updateUsersEnable(int userId, boolean enabled) {
         try (Connection connection = DataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("Update users" +
-                     " Set enabled = (?) " +
-                     " where id = "+ userId +";")) {
+                     " Set enabled = ? " +
+                     " where id = ?")) {
 
             preparedStatement.setBoolean(1, enabled);
             preparedStatement.setInt(2, userId);
@@ -132,9 +131,4 @@ public class UserDAO {
             logger.log(Level.SEVERE, "Exception during updating book", e);
         }
     }
-
-
-
-
-
 }

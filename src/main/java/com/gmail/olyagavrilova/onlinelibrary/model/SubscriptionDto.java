@@ -1,18 +1,9 @@
-package com.gmail.olyagavrilova.onlinelibrary.dao.dto;
-
-
+package com.gmail.olyagavrilova.onlinelibrary.model;
 
 public class SubscriptionDto {
-
     private long bookId;
-
-
     private String  bookTitle;
-
-
     private String  author;
-
-
     private String  publisher;
 
     public SubscriptionDto(long bookId, String bookTitle, String author, String publisher) {

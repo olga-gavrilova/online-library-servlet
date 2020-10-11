@@ -1,8 +1,5 @@
 package com.gmail.olyagavrilova.onlinelibrary.controller;
 
-import com.gmail.olyagavrilova.onlinelibrary.dao.UserDAO;
-import com.gmail.olyagavrilova.onlinelibrary.model.Role;
-import com.gmail.olyagavrilova.onlinelibrary.model.User;
 import com.gmail.olyagavrilova.onlinelibrary.service.UserService;
 
 import javax.servlet.RequestDispatcher;
@@ -10,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/registrationServlet")

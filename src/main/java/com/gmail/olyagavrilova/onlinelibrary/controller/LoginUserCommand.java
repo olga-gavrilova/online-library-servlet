@@ -1,6 +1,6 @@
 package com.gmail.olyagavrilova.onlinelibrary.controller;
 
-import com.gmail.olyagavrilova.onlinelibrary.model.User;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.User;
 import com.gmail.olyagavrilova.onlinelibrary.service.UserService;
 import com.mysql.cj.util.StringUtils;
 

@@ -1,18 +1,12 @@
-package com.gmail.olyagavrilova.onlinelibrary.dao.dto;
+package com.gmail.olyagavrilova.onlinelibrary.model;
 
-
-import com.gmail.olyagavrilova.onlinelibrary.model.Role;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Role;
 
 public class UserDto {
-
     private long id;
-
     private String username;
-
     private  String  password;
-
     private Role role;
-
     private boolean enabled;
 
     public UserDto(long id, String username, String password, Role role) {

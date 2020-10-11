@@ -2,23 +2,19 @@ package com.gmail.olyagavrilova.onlinelibrary.service;
 
 import com.gmail.olyagavrilova.onlinelibrary.dao.BookDAO;
 import com.gmail.olyagavrilova.onlinelibrary.dao.SubscriptionDao;
-import com.gmail.olyagavrilova.onlinelibrary.exception.BookNotFoundException;
-import com.gmail.olyagavrilova.onlinelibrary.model.Book;
-import com.gmail.olyagavrilova.onlinelibrary.model.Subscription;
-import com.gmail.olyagavrilova.onlinelibrary.model.User;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Book;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Subscription;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BookService {
+    private static Logger logger = Logger.getLogger("BookService");
 
     private BookDAO bookDAO;
     private UserService userService;
     private SubscriptionDao subscriptionDao;
-    private static Logger logger = Logger.getLogger("BookService");
-
 
     public void addBookToSubscriptionForUser(int bookId) {
 //        String userName = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -1,20 +1,11 @@
-package com.gmail.olyagavrilova.onlinelibrary.dao.dto;
-
-
-
+package com.gmail.olyagavrilova.onlinelibrary.model;
 
 public class BookDto {
-
     private int id;
-
     private String  title;
-
     private String  author;
-
     private String  publisher;
-
     private int quantity;
-
     private int yearOfPublishing;
 
     public BookDto(int id, String title, String author, String publisher, int quantity, int yearOfPublishing) {

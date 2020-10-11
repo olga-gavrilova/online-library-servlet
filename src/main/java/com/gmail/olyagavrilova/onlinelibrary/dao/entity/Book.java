@@ -1,8 +1,7 @@
-package com.gmail.olyagavrilova.onlinelibrary.model;
+package com.gmail.olyagavrilova.onlinelibrary.dao.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Book  {
     private int id;

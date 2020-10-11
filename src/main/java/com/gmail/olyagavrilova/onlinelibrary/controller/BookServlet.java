@@ -1,7 +1,7 @@
 package com.gmail.olyagavrilova.onlinelibrary.controller;
 
 import com.gmail.olyagavrilova.onlinelibrary.dao.BookDAO;
-import com.gmail.olyagavrilova.onlinelibrary.model.Book;
+import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Book;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
