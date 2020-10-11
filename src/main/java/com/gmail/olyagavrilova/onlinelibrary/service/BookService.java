@@ -1,57 +1,75 @@
 package com.gmail.olyagavrilova.onlinelibrary.service;
 
 import com.gmail.olyagavrilova.onlinelibrary.dao.BookDAO;
-import com.gmail.olyagavrilova.onlinelibrary.dao.SubscriptionDao;
+import com.gmail.olyagavrilova.onlinelibrary.dao.SubscriptionDAO;
 import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Book;
 import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Subscription;
+import com.gmail.olyagavrilova.onlinelibrary.model.BookDto;
+import com.gmail.olyagavrilova.onlinelibrary.service.mapper.BookMapper;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class BookService {
-    private static Logger logger = Logger.getLogger("BookService");
+    private final static Logger logger = Logger.getLogger("BookService");
 
-    private BookDAO bookDAO;
-    private UserService userService;
-    private SubscriptionDao subscriptionDao;
+    private final BookDAO bookDAO = new BookDAO();
+    private final BookMapper bookMapper = new BookMapper();
+    private final SubscriptionDAO subscriptionDao = new SubscriptionDAO();
 
-    public void addBookToSubscriptionForUser(int bookId) {
-//        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-//
-//        User user = userService.loadUserByUsername(userName);
+    public void createBook(String bookTitle, String bookAuthor, String bookPublisher, String bookQuantity, String bookYearOfPublishing) {
+        Book book = new Book();
 
-        Book book = bookDAO.findById(bookId);
+        book.setTitle(bookTitle);
+        book.setAuthor(bookAuthor);
+        book.setPublisher(bookPublisher);
+        book.setQuantity(Integer.parseInt(bookQuantity));
+        book.setYearOfPublishing(Integer.parseInt(bookYearOfPublishing));
 
-        Subscription subscription = new Subscription();
-        subscription.setBookId(bookId);
-//        subscription.setUserId(user.getId());
-
-
-        subscriptionDao.create(subscription);
-
-        book.setQuantity(book.getQuantity() - 1);
-        bookDAO.update(book);
-
-        logger.log(Level.INFO, "New book  was added to subscription");
+        bookDAO.create(book);
     }
 
+    public List<BookDto> findAllBooks() {
+        return bookDAO.findAll().stream()
+                .map(bookMapper::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
 
-    public void removeBookFromSubscriptionForUser(int bookId, int userId) {
-        List<Subscription> subscriptionList = subscriptionDao.findByUserId(userId);
+    public List<BookDto> findBooksByTitle(String title) {
+        return bookDAO.findByTitle(title).stream()
+                .map(bookMapper::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
 
-        Book book = bookDAO.findById(bookId);
+    public List<BookDto> findBooksByAuthor(String author) {
+        return bookDAO.findByAuthor(author).stream()
+                .map(bookMapper::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
 
-        for (Subscription subscription : subscriptionList) {
-            if (subscription.getBookId() == bookId ) {
-                subscriptionDao.deleteSubscription(subscription);
-                break;
-            }
-        }
-        book.setQuantity(book.getQuantity() + 1);
+    public List<BookDto> findBooksByPublisher(String publisher) {
+        return bookDAO.findByPublisher(publisher).stream()
+                .map(bookMapper::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
 
-        logger.log(Level.INFO, "Book  was returned to the library from the subscription");
+    public List<BookDto> findBooksForUser(String username) {
+        return bookDAO.findAllBooksForUser(username).stream()
+                .map(bookMapper::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
 
-        bookDAO.update(book);
+    public void addBookToSubscriptionForUser(int bookId, int userId) {
+        Subscription subscription = new Subscription();
+
+        subscription.setBookId(bookId);
+        subscription.setUserId(userId);
+
+        subscriptionDao.create(subscription);
+    }
+
+    public void removeBookFromSubscriptionForUser(int subscriptionId) {
+        subscriptionDao.delete(subscriptionId);
     }
 }

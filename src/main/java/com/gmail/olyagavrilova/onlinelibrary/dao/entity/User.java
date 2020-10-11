@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
     private int id;
-    private String userName;
+    private String username;
     private String password;
     private Role role;
     private boolean enabled = true;
@@ -14,16 +14,16 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String password, Role role, boolean enabled) {
-        this.userName = userName;
+    public User(String username, String password, Role role, boolean enabled) {
+        this.username = username;
         this.password = password;
         this.role = role;
         this.enabled = enabled;
     }
 
-    public User(int id, String userName, String password, Role role, boolean enabled) {
+    public User(int id, String username, String password, Role role, boolean enabled) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.role = role;
         this.enabled = enabled;
@@ -37,12 +37,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -81,7 +81,7 @@ public class User {
     public String toString() {
         return "User{" + System.identityHashCode(this)+
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", userName='" + username + '\'' +
                 ", role=" + role +
                 ", enabled=" + enabled +
                 '}';

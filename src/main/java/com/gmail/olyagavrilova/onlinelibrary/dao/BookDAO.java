@@ -122,67 +122,82 @@ public class BookDAO {
         return Optional.ofNullable(book);
     }
 
-    public Optional<Book> findByTitle(String title) {
-        Book book = null;
+    public List<Book> findByTitle(String title) {
+        List<Book> books = new ArrayList<>();
+
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from book where title = '" + title + "'")) {
 
             resultSet.next();
 
-            book = new Book(resultSet.getInt("id"),
-                    resultSet.getNString("title"),
-                    resultSet.getNString("author"),
-                    resultSet.getNString("publisher"),
-                    resultSet.getInt("quantity"),
-                    resultSet.getInt("year_of_publishing"));
+            while (resultSet.next()) {
+                Book book = new Book(resultSet.getInt("id"),
+                        resultSet.getNString("title"),
+                        resultSet.getNString("author"),
+                        resultSet.getNString("publisher"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getInt("year_of_publishing"));
+
+                books.add(book);
+            }
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Exception during getting the book from db", e);
         }
-        return Optional.ofNullable(book);
+        return books;
     }
 
-    public Optional<Book> findByAuthor(String author) {
-        Book book = null;
+    public List<Book> findByAuthor(String author) {
+        List<Book> books = new ArrayList<>();
+
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from book where author = '" + author + "'")) {
 
             resultSet.next();
 
-            book = new Book(resultSet.getInt("id"),
-                    resultSet.getNString("title"),
-                    resultSet.getNString("author"),
-                    resultSet.getNString("publisher"),
-                    resultSet.getInt("quantity"),
-                    resultSet.getInt("year_of_publishing"));
+            while (resultSet.next()) {
+                Book book = new Book(resultSet.getInt("id"),
+                        resultSet.getNString("title"),
+                        resultSet.getNString("author"),
+                        resultSet.getNString("publisher"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getInt("year_of_publishing"));
+
+                books.add(book);
+            }
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Exception during getting the book from db", e);
         }
-        return Optional.ofNullable(book);
+        return books;
     }
 
-    public Optional<Book> findByPublisher(String publisher) {
-        Book book = null;
+    public List<Book> findByPublisher(String publisher) {
+        List<Book> books = new ArrayList<>();
+
         try (Connection connection = DataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("select * from book where publisher = '" + publisher + "'")) {
 
             resultSet.next();
 
-            book = new Book(resultSet.getInt("id"),
-                    resultSet.getNString("title"),
-                    resultSet.getNString("author"),
-                    resultSet.getNString("publisher"),
-                    resultSet.getInt("quantity"),
-                    resultSet.getInt("year_of_publishing"));
+            while (resultSet.next()) {
+                Book book = new Book(resultSet.getInt("id"),
+                        resultSet.getNString("title"),
+                        resultSet.getNString("author"),
+                        resultSet.getNString("publisher"),
+                        resultSet.getInt("quantity"),
+                        resultSet.getInt("year_of_publishing"));
+
+                books.add(book);
+            }
 
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Exception during getting the book from db", e);
         }
-        return Optional.ofNullable(book);
+        return books;
     }
 
     public List<Book> findAll() {

@@ -20,7 +20,7 @@ public class UserDAO {
                      "VALUES (?,?,?,?)");
              Statement statement = connection.createStatement()) {
 
-            insertPreparedStatement.setString(1, user.getUserName());
+            insertPreparedStatement.setString(1, user.getUsername());
             insertPreparedStatement.setString(2, user.getPassword());
             insertPreparedStatement.setString(3, user.getRole().toString());
             insertPreparedStatement.setBoolean(4, user.isEnabled());

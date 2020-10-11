@@ -5,6 +5,7 @@ import com.gmail.olyagavrilova.onlinelibrary.model.UserDto;
 import com.gmail.olyagavrilova.onlinelibrary.exception.UserNotFoundException;
 import com.gmail.olyagavrilova.onlinelibrary.dao.entity.Role;
 import com.gmail.olyagavrilova.onlinelibrary.dao.entity.User;
+import com.gmail.olyagavrilova.onlinelibrary.service.mapper.UserMapper;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -16,20 +17,24 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+public class UserService {
 
-
-public class UserService  {
-
-    private final SecureRandom random = new SecureRandom();
-
-  private UserDAO userDAO;
     private static Logger logger = Logger.getLogger("UserService");
 
+    private final UserDAO userDAO = new UserDAO();
+    private final UserMapper userMapper = new UserMapper();
+    private final SecureRandom random = new SecureRandom();
 
-    public User loadUserByUsername(String username) {
-        return userDAO.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username " + username + " not found"));
+    public void createUser(String username, String password, String role) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(getHashFromPassword(password));
+        user.setRole(Role.valueOf(role));
+        user.setEnabled(true);
+
+        userDAO.create(user);
     }
 
     public String getHashFromPassword(String password) {
@@ -50,50 +55,25 @@ public class UserService  {
         Base64.Encoder enc = Base64.getEncoder();
 
         return enc.encodeToString(hash);
-
     }
 
-
-
-    public void createUser(String username, String password, String role)  {
-        UserDto userDto= new UserDto();
-        userDto.setUsername(username);
-        userDto.setPassword(getHashFromPassword(password));
-        userDto.setRole(Role.valueOf(role));
-        userDto.setEnabled(true);
-
-        userDAO.addUserToBD(userDto);
+    public User loadUserByUsername(String username) {
+        return userDAO.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User with username " + username + " not found"));
     }
-
 
     public List<UserDto> findAllReaders() {
-        List<User> list= userDAO.findAll();
-        List<UserDto> userDtoList= new ArrayList<>();
-
-        for(User user: list){
-            UserDto userDto= new UserDto();
-            userDto.setId(user.getId());
-            userDto.setUsername(user.getUserName());
-            userDto.setEnabled(user.isEnabled());
-            userDtoList.add(userDto);
-        }
-
-        return userDtoList;
+        return userDAO.findAll().stream()
+                .map(userMapper::convertEntityToDto)
+                .collect(Collectors.toList());
     }
-
 
     public void changeUsersEnable(int id) {
         User user = userDAO.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with such id was not found"));
 
-        if (user.isEnabled()) {
-            user.setEnabled(false);
-
-        } else {
-            user.setEnabled(true);
-        }
+        user.setEnabled(!user.isEnabled());
 
         userDAO.updateUsersEnable(id, user.isEnabled());
     }
-
 }
